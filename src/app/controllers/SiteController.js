@@ -1,13 +1,23 @@
-class SiteController {
-  //  [GET] news
-  index(req, res) {
-    res.render("home");
-  }
+const Course = require("../models/Course");
 
-  //  [GET] news/:slug
-  search(req, res) {
-    res.render("search");
-  }
+class SiteController {
+    //  [GET] news
+    index(req, res) {
+        Course.find({}, function (err, courses) {
+            if (!err) {
+                res.json(courses);
+                return;
+            }
+            res.status(404).json({ error: "ERROR!!" });
+        });
+
+        // res.render("home");
+    }
+
+    //  [GET] news/:slug
+    search(req, res) {
+        res.render("search");
+    }
 }
 
 module.exports = new SiteController();
